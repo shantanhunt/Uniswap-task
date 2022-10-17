@@ -1,8 +1,6 @@
-// import { MockContract } from '@ethereum-waffle/mock-contract';
 import { ContractFactory, Wallet } from "ethers";
 import { ethers } from "hardhat";
 import { SwapExample1 } from "../../typechain-types";
-// import { deployMockUsdc } from "./mocks";
 import { Signers } from './types';
 
 type UnitLendingFixtureType = {

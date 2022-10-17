@@ -1,7 +1,6 @@
 import { loadFixture } from '@nomicfoundation/hardhat-network-helpers';
 import { getSigners, unitLendingFixture } from "../shared/fixtures";
 import { Signers } from "../shared/types";
-import { shouldDeposit } from "./Lending/LendingShouldDeposit.spec";
 import { ethers } from "hardhat";
 import { expect } from "chai";
 import DAI from "../../artifacts/contracts/DAI.sol/DAI.json";
@@ -38,7 +37,6 @@ describe(`Unit tests`, async () => {
             console.log("swap1: ", this.lending.address);
         });
 
-        // shouldDeposit();
         describe(`#swapExactInputSingle`, async function () {
             it(`Sending ETH to Impersonator`, async function () {
                 let tx = {
@@ -61,9 +59,15 @@ describe(`Unit tests`, async () => {
                 const amount = await this.lending.connect(this.signers.impersonator).swapExactInputSingle(amountIn);
                 console.log("Amount: ", amount);
                 // This amount will be approx 1/1300 which is expected
-                
              });
         });
+
+        // describe(`#depositLiquidity`, async function () {
+        //     it(`Sending ETH to Impersonator`, async function () {
+                
+        //      });
+
+        // });
     });
 });
 
