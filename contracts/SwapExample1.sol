@@ -4,6 +4,7 @@ pragma abicoder v2;
 
 import '@uniswap/v3-periphery/contracts/libraries/TransferHelper.sol';
 import '@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol';
+import "hardhat/console.sol";
 
 contract SwapExample1 {
     // For the scope of these swap examples,
@@ -58,6 +59,7 @@ contract SwapExample1 {
 
         // The call to `exactInputSingle` executes the swap.
         amountOut = swapRouter.exactInputSingle(params);
+        console.log("Amount out is: ", amountOut);
     }
 
     /// @notice swapExactOutputSingle swaps a minimum possible amount of DAI for a fixed amount of WETH.

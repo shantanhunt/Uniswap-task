@@ -4,6 +4,7 @@ import { Signers } from "../shared/types";
 import { shouldDeposit } from "./Lending/LendingShouldDeposit.spec";
 import { ethers } from "hardhat";
 import { expect } from "chai";
+import DAI from "../../artifacts/contracts/DAI.sol/DAI.json";
 
 describe(`Unit tests`, async () => {
     before(async function () {
@@ -23,6 +24,10 @@ describe(`Unit tests`, async () => {
         this.signers.impersonator = impersonatedSigner;
         
         console.log("Impersonated Signer: ", this.signers.impersonator.address);
+
+        // Importing DAI ABI to interact for DAI approvals
+        const DAIAddress = "0x6B175474E89094C44Da98b954EedeAC495271d0F";
+        this.DAIcontract = new ethers.Contract(DAIAddress, DAI.abi, this.signers.impersonator);
     });
 
     describe(`Swap1`, async () => {
@@ -31,25 +36,35 @@ describe(`Unit tests`, async () => {
 
             this.lending = lending;
             console.log("swap1: ", this.lending.address);
-
         });
 
         // shouldDeposit();
         describe(`#swapExactInputSingle`, async function () {
-            it(`swap should happen`, async function () {
-    
+            it(`Sending ETH to Impersonator`, async function () {
                 let tx = {
                     to: this.signers.impersonator.address,
-                    // Convert currency unit from ether to wei
                     value: ethers.utils.parseEther("10")
                 };
                 let result = await this.signers.alice.sendTransaction(tx)
-                console.log("Result: ", result);
-                // const amount = await this.lending.connect(this.signers.impersonator).swapExactInputSingle(1000000000000);
-                // console.log("Amount: ", amount);
+                // console.log("Result: ", result);
                 const balance1 = await this.signers.impersonator.getBalance()
                 console.log("Impersonator balance: ", balance1)
+             });
+
+             it(`Approve DAI for amountIn and then Swap`, async function () {
+                // Approving the Swap Contract for 1 DAI
+                const amountIn =  ethers.utils.parseEther("1");
+                const funcTx = await this.DAIcontract.approve(this.lending.address, amountIn);
+                await funcTx.wait();
+
+                // Swap 1 DAI for ETH 
+                const amount = await this.lending.connect(this.signers.impersonator).swapExactInputSingle(amountIn);
+                console.log("Amount: ", amount);
+                // This amount will be approx 1/1300 which is expected
+                
              });
         });
     });
 });
+
+// 778337639478148
