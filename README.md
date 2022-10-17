@@ -1,4 +1,4 @@
-# How to deploy contracts on Mainnet Fork
+# How to deploy contracts (defaulted to Mainnet Fork)
 
 In the first terminal run 
 
@@ -11,6 +11,11 @@ Open second terminal and run
 ```shell
 npx hardhat test
 ```
+
+## Uniswap Docs
+
+- https://docs.uniswap.org/protocol/guides/local-environment
+- Note: The setup used here is for demonstration purposes. It must be improved with proper security checks for production use.
 
 ## Goal 
 
