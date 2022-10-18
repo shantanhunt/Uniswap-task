@@ -2,6 +2,7 @@ import * as dotenv from "dotenv";
 
 import { HardhatUserConfig } from "hardhat/config";
 import "@nomicfoundation/hardhat-toolbox";
+import "@nomiclabs/hardhat-waffle";
 
 dotenv.config();
 
@@ -11,6 +12,7 @@ const config: HardhatUserConfig = {
       {
         version: "0.7.6",
         settings: {
+          evmVersion: "istanbul",
           optimizer: {
             enabled: true,
             runs: 1000,
@@ -19,6 +21,10 @@ const config: HardhatUserConfig = {
       },
       {
         version: "0.5.12",
+        settings: {},
+      },
+      {
+        version: "0.4.25",
         settings: {},
       },
     ],
@@ -51,6 +57,7 @@ const config: HardhatUserConfig = {
     },
   },
 };
+
 
 export default config;
 

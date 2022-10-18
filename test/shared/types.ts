@@ -6,6 +6,7 @@ declare module "mocha" {
     export interface Context {
         signers: Signers;
         swap1: SwapExample1;
+        pool: LiquidityExample;
     }
 }
 
@@ -14,6 +15,9 @@ export interface Signers {
     alice: SignerWithAddress;
     bob: SignerWithAddress;
     impersonator: SignerWithAddress;
+    impersonator2: SignerWithAddress;
+    impersonator3: SignerWithAddress;
+
 }
 
 // export interface Mocks {
