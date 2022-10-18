@@ -12,7 +12,7 @@ import "hardhat/console.sol";
 
 contract LiquidityExample is IERC721Receiver {
     address public constant DAI = 0x6B175474E89094C44Da98b954EedeAC495271d0F;
-    address public constant USDC = 0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48;
+    address public constant WETH = 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2;
 
     // 0.01% fee
     uint24 public constant poolFee = 100;
@@ -87,7 +87,7 @@ contract LiquidityExample is IERC721Receiver {
         // For this example, we will provide equal amounts of liquidity in both assets.
         // Providing liquidity in both assets means liquidity will be earning fees and is considered in-range.
         uint amount0ToMint = 100 * 1e18;
-        uint amount1ToMint = 100 * 1e6;
+        uint amount1ToMint = 100 * 1e18;
 
         // Approve the position manager
         TransferHelper.safeApprove(
@@ -96,7 +96,7 @@ contract LiquidityExample is IERC721Receiver {
             amount0ToMint
         );
         TransferHelper.safeApprove(
-            USDC,
+            WETH,
             address(nonfungiblePositionManager),
             amount1ToMint
         );
@@ -104,7 +104,7 @@ contract LiquidityExample is IERC721Receiver {
         INonfungiblePositionManager.MintParams
             memory params = INonfungiblePositionManager.MintParams({
                 token0: DAI,
-                token1: USDC,
+                token1: WETH,
                 fee: poolFee,
                 // By using TickMath.MIN_TICK and TickMath.MAX_TICK, 
                 // we are providing liquidity across the whole range of the pool. 
@@ -119,7 +119,7 @@ contract LiquidityExample is IERC721Receiver {
                 deadline: block.timestamp
             });
 
-        // Note that the pool defined by DAI/USDC and fee tier 0.01% must 
+        // Note that the pool defined by DAI/WETH and fee tier 0.01% must 
         // already be created and initialized in order to mint
         (_tokenId, liquidity, amount0, amount1) = nonfungiblePositionManager
             .mint(params);
@@ -140,12 +140,12 @@ contract LiquidityExample is IERC721Receiver {
 
         if (amount1 < amount1ToMint) {
             TransferHelper.safeApprove(
-                USDC,
+                WETH,
                 address(nonfungiblePositionManager),
                 0
             );
             uint refund1 = amount1ToMint - amount1;
-            TransferHelper.safeTransfer(USDC, msg.sender, refund1);
+            TransferHelper.safeTransfer(WETH, msg.sender, refund1);
         }
     }
 
@@ -178,10 +178,10 @@ contract LiquidityExample is IERC721Receiver {
         )
     {
         TransferHelper.safeTransferFrom(DAI, msg.sender, address(this), amountAdd0);
-        TransferHelper.safeTransferFrom(USDC, msg.sender, address(this), amountAdd1);
+        TransferHelper.safeTransferFrom(WETH, msg.sender, address(this), amountAdd1);
 
         TransferHelper.safeApprove(DAI, address(nonfungiblePositionManager), amountAdd0);
-        TransferHelper.safeApprove(USDC, address(nonfungiblePositionManager), amountAdd1);
+        TransferHelper.safeApprove(WETH, address(nonfungiblePositionManager), amountAdd1);
 
         INonfungiblePositionManager.IncreaseLiquidityParams memory params =
             INonfungiblePositionManager.IncreaseLiquidityParams({

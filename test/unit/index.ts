@@ -134,14 +134,14 @@ describe(`Unit tests`, async () => {
         describe(`#depositLiquidity`, async function () {
             it(`Sending WETH to impersonator1 and Add liquidity`, async function () {
                 const amount =  ethers.utils.parseEther("1000");
-                // const WETHbalance = await this.WETHcontract.balanceOf(this.signers.impersonator.address);
-                // console.log("WETH balance of Imp: ", WETHbalance);         
+                const WETHbalance = await this.WETHcontract.balanceOf(this.signers.impersonator.address);
+                console.log("WETH balance of Imp: ", WETHbalance);         
 
-                // const funcTx = await this.WETHcontract.connect(this.signers.impersonator2).transfer(this.signers.impersonator.address, amount);
+                const funcTx = await this.WETHcontract.connect(this.signers.impersonator2).transfer(this.signers.impersonator.address, amount);
+                const WETHbalance2 = await this.WETHcontract.balanceOf(this.signers.impersonator.address);
+                console.log("WETH balance2 of Imp: ", WETHbalance2); 
                 const funcTx2 = await this.DAIcontract.connect(this.signers.impersonator).transfer(this.pool.address, amount);
-                const usdcbalance = await this.usdc.balanceOf(this.signers.impersonator.address);
-                console.log("USDC First Impersonator: ", usdcbalance);
-                const funcTx3 = await this.usdc.connect(this.signers.impersonator).transfer(this.pool.address, 1000*10**6);
+                const funcTx3 = await this.WETHcontract.connect(this.signers.impersonator).transfer(this.pool.address, amount);
                 const result = await this.pool.connect(this.signers.impersonator).mintNewPosition();
         
              });
