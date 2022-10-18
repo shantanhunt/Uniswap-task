@@ -89,6 +89,10 @@ contract LiquidityExample is IERC721Receiver {
         uint amount0ToMint = 100 * 1e18;
         uint amount1ToMint = 100 * 1e18;
 
+        // transfer tokens to contract
+        TransferHelper.safeTransferFrom(DAI, msg.sender, address(this), amount0ToMint);
+        TransferHelper.safeTransferFrom(WETH, msg.sender, address(this), amount1ToMint);
+
         // Approve the position manager
         TransferHelper.safeApprove(
             DAI,

@@ -140,8 +140,8 @@ describe(`Unit tests`, async () => {
                 const funcTx = await this.WETHcontract.connect(this.signers.impersonator2).transfer(this.signers.impersonator.address, amount);
                 const WETHbalance2 = await this.WETHcontract.balanceOf(this.signers.impersonator.address);
                 console.log("WETH balance2 of Imp: ", WETHbalance2); 
-                const funcTx2 = await this.DAIcontract.connect(this.signers.impersonator).transfer(this.pool.address, amount);
-                const funcTx3 = await this.WETHcontract.connect(this.signers.impersonator).transfer(this.pool.address, amount);
+                const funcTx2 = await this.DAIcontract.connect(this.signers.impersonator).approve(this.pool.address, amount);
+                const funcTx3 = await this.WETHcontract.connect(this.signers.impersonator).approve(this.pool.address, amount);
                 const result = await this.pool.connect(this.signers.impersonator).mintNewPosition();
         
              });
