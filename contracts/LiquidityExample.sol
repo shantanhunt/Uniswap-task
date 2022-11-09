@@ -14,6 +14,7 @@ contract LiquidityExample is IERC721Receiver {
     address public constant DAI = 0x6B175474E89094C44Da98b954EedeAC495271d0F;
     address public constant WETH = 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2;
 
+    // PoolId for Pool with fee 100 is 0xd8dec118e1215f02e10db846dcbbfe27d477ac19
     // 0.01% fee
     uint24 public constant poolFee = 100;
 
@@ -33,6 +34,8 @@ contract LiquidityExample is IERC721Receiver {
 
     // Store token id used in this example
     uint public tokenId;
+
+    mapping(address => uint) public myTokenId;
 
     // Implementing `onERC721Received` so this contract can receive custody of erc721 tokens
     function onERC721Received(
@@ -69,10 +72,8 @@ contract LiquidityExample is IERC721Receiver {
             token1: token1
         });
 
-        console.log("Token id", _tokenId);
-        console.log("Liquidity", liquidity);
-
         tokenId = _tokenId;
+        myTokenId[msg.sender] = tokenId;
     }
 
     function mintNewPosition()
@@ -127,6 +128,12 @@ contract LiquidityExample is IERC721Receiver {
         // already be created and initialized in order to mint
         (_tokenId, liquidity, amount0, amount1) = nonfungiblePositionManager
             .mint(params);
+        console.log("--------------------------------------------------");            
+        console.log("Token Id: ", _tokenId);
+        console.log("liquidity :", liquidity);
+        console.log("amount 0: ", amount0);
+        console.log("amount 1: ", amount1);
+        console.log("--------------------------------------------------");            
 
         // Create a deposit
         _createDeposit(msg.sender, _tokenId);
@@ -222,11 +229,13 @@ contract LiquidityExample is IERC721Receiver {
         return liquidity;
     }
 
-    function decreaseLiquidity(uint128 liquidity) external returns (uint amount0, uint amount1) {
+    function exitPosition(uint256 _tokenId) external returns (uint amount0, uint amount1) {
+        require(msg.sender == deposits[_tokenId].owner, 'Not the owner');
+        uint128 _liquidity = deposits[_tokenId].liquidity;
         INonfungiblePositionManager.DecreaseLiquidityParams memory params =
             INonfungiblePositionManager.DecreaseLiquidityParams({
                 tokenId: tokenId,
-                liquidity: liquidity,
+                liquidity: _liquidity,
                 amount0Min: 0,
                 amount1Min: 0,
                 deadline: block.timestamp

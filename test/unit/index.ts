@@ -128,9 +128,9 @@ describe(`Unit tests`, async () => {
             });
         });
 
-        // Impersonator2 will add liquidity of DAI and WETH
-        // Impersonator1 will make swaps from DAI/WETH, depositing DAI and withdrawing WETH
-        // Impersonator2 will experience impermanent loss
+        // Impersonator1 will add liquidity of DAI and WETH
+        // Impersonator2 will make swaps from DAI/WETH, depositing DAI and withdrawing WETH
+        // Impersonator1 will experience impermanent loss
         describe(`#depositLiquidity`, async function () {
             it(`Sending WETH to impersonator1 and Add liquidity`, async function () {
                 const amount =  ethers.utils.parseEther("1000");
@@ -143,8 +143,12 @@ describe(`Unit tests`, async () => {
                 const funcTx2 = await this.DAIcontract.connect(this.signers.impersonator).approve(this.pool.address, amount);
                 const funcTx3 = await this.WETHcontract.connect(this.signers.impersonator).approve(this.pool.address, amount);
                 const result = await this.pool.connect(this.signers.impersonator).mintNewPosition();
-        
+                // console.log(result);
              });
+
+            //  it(`Get Token Id and Pool Id`, async function () {
+
+            //  });
 
         });
     });

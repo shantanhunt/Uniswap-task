@@ -1,0 +1,26 @@
+// Filters all the pools according to single token provided. Also gives poolId. 
+// DAI-WETH PoolIds
+0xc2e9f25be6257c210d7adf0d4cd6e3e881ba25f8
+0xd8dec118e1215f02e10db846dcbbfe27d477ac19
+0x64f701f93cfbe2cc5d4886f1a514eb1ac02543eb
+0x8f9a0935b26097a1fc15d4919e0b9e466edc1c57
+
+Query:
+
+{
+    tokens(where:{symbol:"DAI"}) {
+    name
+    id
+    whitelistPools {
+      id
+      token0 {
+        id
+        symbol
+      }
+      token1 {
+        id
+        symbol
+      }
+    }
+  }
+}

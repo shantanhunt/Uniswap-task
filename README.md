@@ -12,10 +12,33 @@ Open second terminal and run
 npx hardhat test
 ```
 
+## Strategy
+- I need to get the PoolId of the pool.
+- I mostly need two things to calculate impermnent loss:
+1) I need to track the liquidity present the pool each time swaps happen, so that I can calculate how much 
+the LP will get when he will withdraw his tokens. 
+2) Then I need to calculate what is the current price of both the tokens. Using that impermanent loss can be calculated.  
+(This is because it will help to tell how much the tokens would have been worth if the LP would have simply held the tokens instead
+of providing liquidity to the Uniswap Pair)
+- Maybe Chainlink External Adapter will be needed that queries the Uniswap subgraph and sends the necessary data to smart
+contract.
+- Maybe Uniswap SDK will do all the required stuff instead of an external adapter. 
+
+## Uniswap SDK
+- Note
+- https://docs.uniswap.org/sdk/guides/quick-start
+
 ## Uniswap Docs
 
 - https://docs.uniswap.org/protocol/guides/local-environment
 - Note: The setup used here is for demonstration purposes. It must be improved with proper security checks for production use.
+
+## References
+
+- https://github.com/Uniswap/v3-periphery/blob/main/contracts/NonfungiblePositionManager.sol
+- https://ethereum.org/en/developers/tutorials/the-graph-fixing-web3-data-querying/
+- Chainlink External Adapter in Typescript
+https://github.com/smartcontractkit/external-adapters-js/tree/develop/packages/examples/source
 
 ## Goal 
 
