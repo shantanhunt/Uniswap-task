@@ -37,7 +37,7 @@ const config: HardhatUserConfig = {
       // which can lead into inconsistency of tests
       forking: {
         url: "https://eth-mainnet.g.alchemy.com/v2/TiSaAZzkxhfz4sI2J7cYVhLbB4z57r9W",
-        blockNumber: 15752899,
+        blockNumber: 15936268,
         enabled: true
       },
       chainId: 31337,

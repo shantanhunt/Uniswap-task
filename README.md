@@ -13,6 +13,9 @@ npx hardhat test
 ```
 
 ## Strategy
+- Here we are providing liquidity for the entire range such as in the Uniswap V2.
+- [Impersonator 1 with DAI](https://etherscan.io/address/0x16b34ce9a6a6f7fc2dd25ba59bf7308e7b38e186)
+- [Impersonator 2 with WETH](https://etherscan.io/address/0x06920c9fc643de77b99cb7670a944ad31eaaa260) 
 - I need to get the PoolId of the pool.
 - I mostly need two things to calculate impermnent loss:
 1) I need to track the liquidity present the pool each time swaps happen, so that I can calculate how much 
@@ -25,8 +28,12 @@ contract.
 - Maybe Uniswap SDK will do all the required stuff instead of an external adapter. 
 
 ## Uniswap SDK
-- Note
+
 - https://docs.uniswap.org/sdk/guides/quick-start
+
+## Uniswap Subgraph
+
+- https://docs.uniswap.org/sdk/subgraph/subgraph-examples
 
 ## Uniswap Docs
 
@@ -34,11 +41,13 @@ contract.
 - Note: The setup used here is for demonstration purposes. It must be improved with proper security checks for production use.
 
 ## References
-
+- [Uniswap V3 Deep Dive](https://trapdoortech.medium.com/uniswap-deep-dive-into-v3-technical-white-paper-2fe2b5c90d2)
+- [Uniswap V3 Math](https://atiselsts.github.io/pdfs/uniswap-v3-liquidity-math.pdf)
+- [Uniswap V3 whitepaper](https://uniswap.org/whitepaper-v3.pdf)
 - https://github.com/Uniswap/v3-periphery/blob/main/contracts/NonfungiblePositionManager.sol
 - https://ethereum.org/en/developers/tutorials/the-graph-fixing-web3-data-querying/
 - Chainlink External Adapter in Typescript
-https://github.com/smartcontractkit/external-adapters-js/tree/develop/packages/examples/source
+- https://github.com/smartcontractkit/external-adapters-js/tree/develop/packages/examples/source
 
 ## Goal 
 

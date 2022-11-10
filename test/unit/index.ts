@@ -18,7 +18,7 @@ describe(`Unit tests`, async () => {
 
         // Impersonating account from mainnet with DAI holding
         const helpers = require("@nomicfoundation/hardhat-network-helpers");
-        const address = "0x5d38b4e4783e34e2301a2a36c39a03c45798c4dd";
+        const address = "0x16b34ce9a6a6f7fc2dd25ba59bf7308e7b38e186";
         await helpers.impersonateAccount(address);
         const impersonatedSigner = await ethers.getSigner(address);
         this.signers.impersonator = impersonatedSigner;
