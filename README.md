@@ -82,5 +82,6 @@ We need to deploy a simple smart contract that wraps around Uniswap V3's LP exit
 ## Testing with MockDAI and SAND
 - [Added liquidity at price 1000 DAI per SAND](https://mumbai.polygonscan.com/tx/0x95ccc2b695cf34ea89b1ec52501d49fa345f377506360baca04c9c1a8d23a73e)
 - [NFT with Minted for the position](https://mumbai.polygonscan.com/token/0xc36442b4a4522e871399cd717abdd847ab11fe88?a=6318#readProxyContract)
-- Pool id- 0x076c373a9aeb3E2F72f45339e9e11A4D37Dc7fEf
-
+- Pool id for the tokens- 0x076c373a9aeb3E2F72f45339e9e11A4D37Dc7fEf
+- [Bob provides some liquidity](https://mumbai.polygonscan.com/tx/0xa5a0cece0d115dae490dc574326c4a36de04d63404dbf0d021a2e8e6eeed8f92)
+- [Bob added more liquidity](https://mumbai.polygonscan.com/tx/0x9a5296834e98747fde9fe3d94fafdbb1e9c720ddb0537e630ecd58516c0b6d2d)

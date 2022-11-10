@@ -15,13 +15,27 @@ async function main() {
   console.log("Account balance:", (await deployer.getBalance()).toString());
 
   // Uncomment this while running actual tests for interaction.
-  // const Example = await ethers.getContractFactory("SwapExample1");
-  // const example = await Example.deploy("0xE592427A0AEce92De3Edee1F18E0157C05861564");
+  // This is contract is for providing/exiting liquidity 
+  const LiquidityExample = await ethers.getContractFactory("LiquidityExample");
+  const liquidityExample = await LiquidityExample.deploy();
+
+  // This is contract is for Swapping tokens 
+  const SwapExample = await ethers.getContractFactory("SwapExample1");
+  const swapExample = await SwapExample.deploy("0xE592427A0AEce92De3Edee1F18E0157C05861564");
 
   // const MockDAI = await ethers.getContractFactory("MockDAI");
   // const mockDAI = await MockDAI.deploy("Moack DAI", "MOCKDAI");
 
-  console.log("SwapExample address:", example.address);
+  console.log("SwapExample address:", swapExample.address);
+
+  // Hardcoding Pool Address for MockDAI-SAND for now
+  const poolAdd = "0x076c373a9aeb3E2F72f45339e9e11A4D37Dc7fEf";
+
+  // Calculatin Ratio
+  // const ratio = await liquidityExample.calculateRatioOfLPShare(6318, poolAdd);
+  // console.log("Ratio: ", ratio);
+  const liquidity = await liquidityExample.getLiquidity(6318);
+  console.log("Position liquidity: ", liquidity);
 
   // Importing mockDAI ABI to interact with mockDAI
   const DAIAddress = "0x4d582295afB968eA3b9492c5ec594b830D180E8d";

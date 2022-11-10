@@ -21,6 +21,8 @@ contract LiquidityExample is IERC721Receiver {
     INonfungiblePositionManager public nonfungiblePositionManager = 
         INonfungiblePositionManager(0xC36442b4a4522E871399CD717aBDD847Ab11FE88);
 
+
+
     /// @notice Represents the deposit of an NFT
     struct Deposit {
         address owner;
@@ -211,12 +213,12 @@ contract LiquidityExample is IERC721Receiver {
         console.log("amount 1", amount1);
     }
 
-    function getLiquidity(uint _tokenId) external view returns (uint128) {
+    function getLiquidityAndTokensAddress(uint _tokenId) public view returns (address , address, uint128) {
         (
             ,
             ,
-            ,
-            ,
+            address token0,
+            address token1,
             ,
             ,
             ,
@@ -226,7 +228,7 @@ contract LiquidityExample is IERC721Receiver {
             ,
 
         ) = nonfungiblePositionManager.positions(_tokenId);
-        return liquidity;
+        return (token0, token1, liquidity);
     }
 
     function exitPosition(uint256 _tokenId) external returns (uint amount0, uint amount1) {
@@ -246,4 +248,36 @@ contract LiquidityExample is IERC721Receiver {
         console.log("amount 0", amount0);
         console.log("amount 1", amount1);
     }
+
+    function calculateRatioOfLPShare (uint256 _tokenId, address _poolAdd) public view returns(uint128) {
+        address _token0;
+        address _token1; 
+        uint128 liquidity;
+        (_token0, _token1, liquidity) = getLiquidityAndTokensAddress(_tokenId);
+        IUniswapV3Pool uniswapV3Pool = IUniswapV3Pool(_poolAdd);
+        uint128 TotalPoolLiquidity = uniswapV3Pool.liquidity();
+        uint128 ratioOfLPShare = liquidity / TotalPoolLiquidity;
+        console.log("Ratio of LP Share", ratioOfLPShare);
+        return ratioOfLPShare;
 }
+
+    function getLiquidity(uint _tokenId) public view returns (uint128) {
+        (
+            ,
+            ,
+            ,
+            ,
+            ,
+            ,
+            ,
+            uint128 liquidity,
+            ,
+            ,
+            ,
+
+        ) = nonfungiblePositionManager.positions(_tokenId);
+        return liquidity;
+    }
+
+}
+

@@ -8,9 +8,9 @@ import * as dotenv from "dotenv";
 
 const provider = new ethers.providers.JsonRpcProvider(process.env.MUMBAI_RPC_URL)
 
-const poolAddress = '0x8ad599c3A0ff1De082011EFDDc58f1908eb6e6D8'
+// const poolAddress = '0x8ad599c3A0ff1De082011EFDDc58f1908eb6e6D8'
 
-const poolContract = new ethers.Contract(poolAddress, IUniswapV3PoolABI, provider)
+// const poolContract = new ethers.Contract(poolAddress, IUniswapV3PoolABI, provider)
 
 const factoryAddress = '0x1F98431c8aD98523631AE4a59f267346ea31F984'
 
