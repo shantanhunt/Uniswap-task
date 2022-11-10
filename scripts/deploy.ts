@@ -4,27 +4,32 @@
 // When running the script with `npx hardhat run <script>` you'll find the Hardhat
 // Runtime Environment's members available in the global scope.
 import { ethers } from "hardhat";
+import { expect } from "chai";
 
 async function main() {
-  // Hardhat always runs the compile task when running scripts with its command
-  // line interface.
-  //
-  // If this script is run directly using `node` you may want to call compile
-  // manually to make sure everything is compiled
-  // await hre.run('compile');
+  const [deployer] = await ethers.getSigners();
 
-  // We get the contract to deploy
-  const lendingFactory = await ethers.getContractFactory("Lending");
-  const lending = await lendingFactory.deploy();
+  console.log("Deploying contracts with the account:", deployer.address);
 
-  await lending.deployed();
+  console.log("Account balance:", (await deployer.getBalance()).toString());
 
-  console.log("Lending deployed to:", lending.address);
+  const Example = await ethers.getContractFactory("SwapExample1");
+  const example = await Example.deploy("0xE592427A0AEce92De3Edee1F18E0157C05861564");
+
+  const MockDAI = await ethers.getContractFactory("MockDAI");
+  const mockDAI = await MockDAI.deploy("Moack DAI", "MOCKDAI");
+
+  console.log("SwapExample address:", example.address);
+  const ownerBalance = await mockDAI.balanceOf(deployer.address);
+  expect(await mockDAI.totalSupply()).to.equal(ownerBalance);
+  console.log("Test passed");
 }
 
-// We recommend this pattern to be able to use async/await everywhere
-// and properly handle errors.
-main().catch((error) => {
-  console.error(error);
-  process.exitCode = 1;
-});
+main()
+  .then(() => process.exit(0))
+  .catch((error) => {
+    console.error(error);
+    process.exit(1);
+  });
+
+  

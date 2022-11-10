@@ -38,7 +38,7 @@ const config: HardhatUserConfig = {
       forking: {
         url: "https://eth-mainnet.g.alchemy.com/v2/TiSaAZzkxhfz4sI2J7cYVhLbB4z57r9W",
         blockNumber: 15936268,
-        enabled: true
+        enabled: false
       },
       chainId: 31337,
       gas: 2100000,
@@ -46,6 +46,11 @@ const config: HardhatUserConfig = {
     },
     goerli: {
       url: process.env.GOERLI_RPC_URL || "",
+      accounts:
+        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+    },
+    mumbai: {
+      url: process.env.MUMBAI_RPC_URL || "",
       accounts:
         process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
     },

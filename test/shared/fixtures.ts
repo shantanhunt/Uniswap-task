@@ -28,6 +28,7 @@ export async function unitLendingFixture(): Promise<UnitLendingFixtureType> {
         .deploy("0xE592427A0AEce92De3Edee1F18E0157C05861564")) as SwapExample1;
 
     await lending.deployed();
+    console.log("SwapExample on Mumbai: ", lending);
 
     // Deploy LiquidityExample
     const poolFactory: ContractFactory = await ethers.getContractFactory(

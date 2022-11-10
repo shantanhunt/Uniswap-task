@@ -34,6 +34,7 @@ contract.
 ## Uniswap Subgraph
 
 - https://docs.uniswap.org/sdk/subgraph/subgraph-examples
+- [Query Uniswap LP position data using subgraph](https://docs.uniswap.org/sdk/subgraph/subgraph-examples#position-data)
 
 ## Uniswap Docs
 
@@ -44,6 +45,7 @@ contract.
 - [Uniswap V3 Deep Dive](https://trapdoortech.medium.com/uniswap-deep-dive-into-v3-technical-white-paper-2fe2b5c90d2)
 - [Uniswap V3 Math](https://atiselsts.github.io/pdfs/uniswap-v3-liquidity-math.pdf)
 - [Uniswap V3 whitepaper](https://uniswap.org/whitepaper-v3.pdf)
+- [Get a Uniswap V3 Pool Address for a Testnet](https://www.youtube.com/watch?v=gPCMxTKAvXk)
 - https://github.com/Uniswap/v3-periphery/blob/main/contracts/NonfungiblePositionManager.sol
 - https://ethereum.org/en/developers/tutorials/the-graph-fixing-web3-data-querying/
 - Chainlink External Adapter in Typescript
@@ -65,3 +67,7 @@ When the loss crosses a threshold (like say 50%), we need to trigger the recover
 ## Exiting a position
 
 We need to deploy a simple smart contract that wraps around Uniswap V3's LP exiting function and trigger this function when the above monitoring logic is executed. The output of this should result in the wallet having the LP tokens back with the position fuly exited.
+
+## Testing with MockDAI and UFO
+- [Account 1 provides liquidity at price initialized at 1000 UFO per MockDAI](https://mumbai.polygonscan.com/tx/0xdfbfdfefcfd653eed93b240c7b602bf25a521e4fb22726d832ca93d3b111f7f4)
+- [Bob swaps MockDAI for UFO](https://mumbai.polygonscan.com/tx/0x85cce4ce9946c28d8b2d801bf67621e37b39b591fef51424d883587524971883)
