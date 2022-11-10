@@ -14,8 +14,7 @@ npx hardhat test
 
 ## Strategy
 - Here we are providing liquidity for the entire range such as in the Uniswap V2.
-- [Impersonator 1 with DAI](https://etherscan.io/address/0x16b34ce9a6a6f7fc2dd25ba59bf7308e7b38e186)
-- [Impersonator 2 with WETH](https://etherscan.io/address/0x06920c9fc643de77b99cb7670a944ad31eaaa260) 
+- MockDAI address on Mumbai: 0x4d582295afB968eA3b9492c5ec594b830D180E8d 
 - I need to get the PoolId of the pool.
 - I mostly need two things to calculate impermnent loss:
 1) I need to track the liquidity present the pool each time swaps happen, so that I can calculate how much 
@@ -71,3 +70,7 @@ We need to deploy a simple smart contract that wraps around Uniswap V3's LP exit
 ## Testing with MockDAI and UFO
 - [Account 1 provides liquidity at price initialized at 1000 UFO per MockDAI](https://mumbai.polygonscan.com/tx/0xdfbfdfefcfd653eed93b240c7b602bf25a521e4fb22726d832ca93d3b111f7f4)
 - [Bob swaps MockDAI for UFO](https://mumbai.polygonscan.com/tx/0x85cce4ce9946c28d8b2d801bf67621e37b39b591fef51424d883587524971883)
+
+## Testing with MockDAI and SAND
+- [Added liquidity at price 1000 DAI per SAND](https://mumbai.polygonscan.com/tx/0x95ccc2b695cf34ea89b1ec52501d49fa345f377506360baca04c9c1a8d23a73e)
+- Pool id- 0x076c373a9aeb3E2F72f45339e9e11A4D37Dc7fEf
