@@ -22,6 +22,14 @@ the LP will get when he will withdraw his tokens.
 2) Then I need to calculate what is the current price of both the tokens. Using that impermanent loss can be calculated.  
 (This is because it will help to tell how much the tokens would have been worth if the LP would have simply held the tokens instead
 of providing liquidity to the Uniswap Pair)
+- UniswapPool contract has liquidity variable which gives its total liquidity.
+Using NFT of a position, we can get the local liquidity of an LP. So if two LPs are present,
+then the ratio of local liquidity to total liquidity may tell how much percent of tokens will each LP get back (need to test this and verify).
+- Now if you know the percent of Liquidity provided by the LP. You now want how many tokens will he get if he withdraws now.
+For that simply check the balance of the UniswapPool using the ERC20 token contracts. Then let's say the LP has 10 percent of the 
+liquidity share. Then he will get back 10 percent of the total tokens that the UniswapPool holds.
+
+## Additional
 - Maybe Chainlink External Adapter will be needed that queries the Uniswap subgraph and sends the necessary data to smart
 contract.
 - Maybe Uniswap SDK will do all the required stuff instead of an external adapter. 
@@ -73,4 +81,6 @@ We need to deploy a simple smart contract that wraps around Uniswap V3's LP exit
 
 ## Testing with MockDAI and SAND
 - [Added liquidity at price 1000 DAI per SAND](https://mumbai.polygonscan.com/tx/0x95ccc2b695cf34ea89b1ec52501d49fa345f377506360baca04c9c1a8d23a73e)
+- [NFT with Minted for the position](https://mumbai.polygonscan.com/token/0xc36442b4a4522e871399cd717abdd847ab11fe88?a=6318#readProxyContract)
 - Pool id- 0x076c373a9aeb3E2F72f45339e9e11A4D37Dc7fEf
+
