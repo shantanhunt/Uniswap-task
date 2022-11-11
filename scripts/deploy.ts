@@ -32,15 +32,15 @@ async function main() {
   const poolAdd = "0x076c373a9aeb3E2F72f45339e9e11A4D37Dc7fEf"; // Make a constructor in SwapExample for poolAdd
 
   // Calculate position liquidity
-  const liquidity = await liquidityExample.getLiquidity(6318);
+  const liquidity = await liquidityExample.getLiquidity(6321);
   console.log("Position liquidity: ", liquidity);
 
   // Getting params
-  const result = await liquidityExample.getLiquidityAndTokensAddress(6318);
+  const result = await liquidityExample.getLiquidityAndTokensAddress(6321);
   console.log("Result: ", result);
 
   // Calculating Ratio
-  const ratio = await liquidityExample.calculateRatioOfLPShare(6318);
+  const ratio = await liquidityExample.calculateRatioOfLPShare(6321);
   console.log("Ratio: ", ratio);
   const val0 = await liquidityExample.getPoolLiquidity();
   console.log("Liq: ", val0);
@@ -50,7 +50,7 @@ async function main() {
   console.log("Balance: ", bal);
 
   // calculateWithdrawableTokens
-  const withdrawable = await liquidityExample.calculateWithdrawableTokens(6318);
+  const withdrawable = await liquidityExample.calculateWithdrawableTokens(6321);
   console.log("Withdrawable: ", withdrawable);
 
   // Importing mockDAI ABI to interact with mockDAI

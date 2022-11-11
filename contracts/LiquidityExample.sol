@@ -299,5 +299,32 @@ contract LiquidityExample is IERC721Receiver {
         return tokenBalance;
     }
 
+    function getGlobalPriceOfToken0() public pure returns(uint256) {
+        return 1; // For DAI it is $1
+    }
+
+    function getGlobalPriceOfToken1() public pure returns(uint256) {
+        return 800; // Assuming SAND value drops to 800
+    }
+
+    // Assuming stablecoin DAI's value is same same $1 during addLiquidity event
+    function getInitialPriceOfToken0() public pure returns(uint256){
+        return 1;
+    }
+
+    // Assume initial price for the token SAND was $1500 
+    // This was also set during initialization of Uni-V3 pool of MockDAI-SAND 
+    function getInitialPriceOfToken1() public pure returns(uint256){
+        return 1500;
+    }
+
+    // Calulating the value of both tokens in terms of dollar
+    function calculateCurrentValue(uint256 _tokenId) public view returns(uint256){
+        uint256 amount0;
+        uint256 amount1;
+        (amount0, amount1) = calculateWithdrawableTokens(_tokenId);
+        uint256 totalValue = amount0*getGlobalPriceOfToken0() + amount1*getGlobalPriceOfToken1();
+        return totalValue;
+    }
 }
 
