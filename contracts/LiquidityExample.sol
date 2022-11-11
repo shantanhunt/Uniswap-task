@@ -21,6 +21,9 @@ contract LiquidityExample is IERC721Receiver {
     INonfungiblePositionManager public nonfungiblePositionManager = 
         INonfungiblePositionManager(0xC36442b4a4522E871399CD717aBDD847Ab11FE88);
 
+    IUniswapV3Pool public uniswapV3Pool = 
+        IUniswapV3Pool(0x076c373a9aeb3E2F72f45339e9e11A4D37Dc7fEf);
+
 
 
     /// @notice Represents the deposit of an NFT
@@ -213,24 +216,6 @@ contract LiquidityExample is IERC721Receiver {
         console.log("amount 1", amount1);
     }
 
-    function getLiquidityAndTokensAddress(uint _tokenId) public view returns (address , address, uint128) {
-        (
-            ,
-            ,
-            address token0,
-            address token1,
-            ,
-            ,
-            ,
-            uint128 liquidity,
-            ,
-            ,
-            ,
-
-        ) = nonfungiblePositionManager.positions(_tokenId);
-        return (token0, token1, liquidity);
-    }
-
     function exitPosition(uint256 _tokenId) external returns (uint amount0, uint amount1) {
         require(msg.sender == deposits[_tokenId].owner, 'Not the owner');
         uint128 _liquidity = deposits[_tokenId].liquidity;
@@ -249,15 +234,27 @@ contract LiquidityExample is IERC721Receiver {
         console.log("amount 1", amount1);
     }
 
+    function getLiquidityAndTokensAddress(uint _tokenId) public view returns(address token0, address token1, uint128 liquidity) {
+        (
+            ,
+            ,
+            token0,
+            token1,
+            ,
+            ,
+            ,
+            liquidity,
+            ,
+            ,
+            ,
+
+        ) = nonfungiblePositionManager.positions(_tokenId);
+    }
+ 
     function calculateRatioOfLPShare (uint256 _tokenId, address _poolAdd) public view returns(uint128) {
-        address _token0;
-        address _token1; 
-        uint128 liquidity;
-        (_token0, _token1, liquidity) = getLiquidityAndTokensAddress(_tokenId);
-        IUniswapV3Pool uniswapV3Pool = IUniswapV3Pool(_poolAdd);
-        uint128 TotalPoolLiquidity = uniswapV3Pool.liquidity();
-        uint128 ratioOfLPShare = liquidity / TotalPoolLiquidity;
-        console.log("Ratio of LP Share", ratioOfLPShare);
+        uint128 liquidity = getLiquidity(_tokenId);
+        uint128 TotalPoolLiquidity = getPoolLiquidity();
+        uint128 ratioOfLPShare = (liquidity * 1000) / (TotalPoolLiquidity) ; // Here 829 Means 82.9% 
         return ratioOfLPShare;
 }
 
@@ -277,6 +274,12 @@ contract LiquidityExample is IERC721Receiver {
 
         ) = nonfungiblePositionManager.positions(_tokenId);
         return liquidity;
+    }
+
+        function getPoolLiquidity() public view returns (uint128) {
+        uint128 liq;
+        liq = uniswapV3Pool.liquidity();
+        return liq;
     }
 
 }
