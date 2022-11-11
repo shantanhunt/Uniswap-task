@@ -29,7 +29,7 @@ async function main() {
   console.log("SwapExample address:", swapExample.address);
 
   // Hardcoding Pool Address for MockDAI-SAND for now
-  const poolAdd = "0x076c373a9aeb3E2F72f45339e9e11A4D37Dc7fEf";
+  const poolAdd = "0x076c373a9aeb3E2F72f45339e9e11A4D37Dc7fEf"; // Make a constructor in SwapExample for poolAdd
 
   // Calculate position liquidity
   const liquidity = await liquidityExample.getLiquidity(6318);
@@ -40,12 +40,18 @@ async function main() {
   console.log("Result: ", result);
 
   // Calculating Ratio
-  const ratio = await liquidityExample.calculateRatioOfLPShare(6318, poolAdd);
+  const ratio = await liquidityExample.calculateRatioOfLPShare(6318);
   console.log("Ratio: ", ratio);
   const val0 = await liquidityExample.getPoolLiquidity();
   console.log("Liq: ", val0);
 
-  // const liquidityAndAdress = await liquidityExample.getLiquidityAndTokensAddress(6318)
+  // Get balance of tokens
+  const bal = await liquidityExample.getPoolTokenBalance("0x4d582295afb968ea3b9492c5ec594b830d180e8d");
+  console.log("Balance: ", bal);
+
+  // calculateWithdrawableTokens
+  const withdrawable = await liquidityExample.calculateWithdrawableTokens(6318);
+  console.log("Withdrawable: ", withdrawable);
 
   // Importing mockDAI ABI to interact with mockDAI
   const DAIAddress = "0x4d582295afB968eA3b9492c5ec594b830D180E8d";

@@ -8,6 +8,7 @@ import "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
 import "@uniswap/v3-periphery/contracts/libraries/TransferHelper.sol";
 import "@uniswap/v3-periphery/contracts/interfaces/INonfungiblePositionManager.sol";
 import "@uniswap/v3-periphery/contracts/base/LiquidityManagement.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "hardhat/console.sol";
 
 contract LiquidityExample is IERC721Receiver {
@@ -251,12 +252,22 @@ contract LiquidityExample is IERC721Receiver {
         ) = nonfungiblePositionManager.positions(_tokenId);
     }
  
-    function calculateRatioOfLPShare (uint256 _tokenId, address _poolAdd) public view returns(uint128) {
+    function calculateRatioOfLPShare (uint256 _tokenId) public view returns(uint128) {
         uint128 liquidity = getLiquidity(_tokenId);
         uint128 TotalPoolLiquidity = getPoolLiquidity();
-        uint128 ratioOfLPShare = (liquidity * 1000) / (TotalPoolLiquidity) ; // Here 829 Means 82.9% 
+        uint128 ratioOfLPShare = (liquidity * 10000) / (TotalPoolLiquidity) ; // Here 8297 Means 82.97% And 10000 is bcoz it was in decimal
         return ratioOfLPShare;
 }
+
+    function calculateWithdrawableTokens(uint256 _tokenId) public view returns (uint256 amount0, uint256 amount11){
+        uint256 ratio = calculateRatioOfLPShare(_tokenId);
+        address _token0 = uniswapV3Pool.token0();
+        address _token1 = uniswapV3Pool.token1();
+        uint256 balance0 = getPoolTokenBalance(_token0);
+        uint256 balance1 = getPoolTokenBalance(_token1);
+        amount0 = (ratio * balance0 ) / 10000;
+        amount11 = (ratio * balance1 ) / 10000;
+    }
 
     function getLiquidity(uint _tokenId) public view returns (uint128) {
         (
@@ -276,10 +287,16 @@ contract LiquidityExample is IERC721Receiver {
         return liquidity;
     }
 
-        function getPoolLiquidity() public view returns (uint128) {
+    function getPoolLiquidity() public view returns (uint128) {
         uint128 liq;
         liq = uniswapV3Pool.liquidity();
         return liq;
+    }
+
+    function getPoolTokenBalance(address _tokenAdd) public view returns(uint256) {
+        IERC20 token = IERC20(_tokenAdd);
+        uint256 tokenBalance = token.balanceOf(address(uniswapV3Pool));
+        return tokenBalance;
     }
 
 }
