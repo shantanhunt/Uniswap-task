@@ -134,12 +134,6 @@ contract LiquidityExample is IERC721Receiver {
         // already be created and initialized in order to mint
         (_tokenId, liquidity, amount0, amount1) = nonfungiblePositionManager
             .mint(params);
-        console.log("--------------------------------------------------");            
-        console.log("Token Id: ", _tokenId);
-        console.log("liquidity :", liquidity);
-        console.log("amount 0: ", amount0);
-        console.log("amount 1: ", amount1);
-        console.log("--------------------------------------------------");            
 
         // Create a deposit
         _createDeposit(msg.sender, _tokenId);
@@ -231,8 +225,18 @@ contract LiquidityExample is IERC721Receiver {
 
         (amount0, amount1) = nonfungiblePositionManager.decreaseLiquidity(params);
 
-        console.log("amount 0", amount0);
-        console.log("amount 1", amount1);
+    }
+
+    
+    /// @notice Transfers the NFT to the owner
+    /// @param _tokenId The id of the erc721
+    function retrieveNFT(uint256 _tokenId) external {
+        // must be the owner of the NFT
+        require(msg.sender == deposits[_tokenId].owner, 'Not the owner');
+        // transfer ownership to original owner
+        nonfungiblePositionManager.safeTransferFrom(address(this), msg.sender, _tokenId);
+        //remove information related to tokenId
+        delete deposits[_tokenId];
     }
 
     function getLiquidityAndTokensAddress(uint _tokenId) public view returns(address token0, address token1, uint128 liquidity) {
@@ -326,5 +330,7 @@ contract LiquidityExample is IERC721Receiver {
         uint256 totalValue = amount0*getGlobalPriceOfToken0() + amount1*getGlobalPriceOfToken1();
         return totalValue;
     }
+
+    
 }
 
