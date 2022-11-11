@@ -6,6 +6,7 @@
 import { ethers } from "hardhat";
 import { expect } from "chai";
 import DAI from "../artifacts/contracts/MockDAI.sol/MockDAI.json";
+import LExample from "../artifacts/contracts/LiquidityExample.sol/LiquidityExample.json";
 
 async function main() {
   const [deployer, bob] = await ethers.getSigners();
@@ -16,8 +17,12 @@ async function main() {
 
   // Uncomment this while running actual tests for interaction.
   // This is contract is for providing/exiting liquidity 
-  const LiquidityExample = await ethers.getContractFactory("LiquidityExample");
-  const liquidityExample = await LiquidityExample.deploy();
+  // const LiquidityExample = await ethers.getContractFactory("LiquidityExample");
+  // const liquidityExample = await LiquidityExample.deploy();
+
+  // Importing LiquidityExample ABI to interact with mockDAI
+  const LExampleAddress = "0x2A1bF12712f4D5b043761CAA8A06F5fA528f3328";
+  const liquidityExample = new ethers.Contract(LExampleAddress, LExample.abi, deployer);
 
   // This is contract is for Swapping tokens 
   const SwapExample = await ethers.getContractFactory("SwapExample1");

@@ -99,3 +99,6 @@ We need to deploy a simple smart contract that wraps around Uniswap V3's LP exit
     Ratio:  BigNumber { value: "0" }
     PoolLiquidity:  BigNumber { value: "948730417494628949734" }
 -   Note: This remaining Pool liquidity is of Bob. 
+
+## Liquidity Example contracts on Mumbai Testnet
+1) 0x2A1bF12712f4D5b043761CAA8A06F5fA528f3328

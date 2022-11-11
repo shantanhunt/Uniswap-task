@@ -12,8 +12,8 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "hardhat/console.sol";
 
 contract LiquidityExample is IERC721Receiver {
-    address public constant DAI = 0x6B175474E89094C44Da98b954EedeAC495271d0F;
-    address public constant WETH = 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2;
+    address public constant MOCKDAI = 0x4d582295afB968eA3b9492c5ec594b830D180E8d;
+    address public constant SAND = 0xC07DDD7Cf136e12C97c0488A02052a16c573b30C;
 
     // PoolId for Pool with fee 100 is 0xd8dec118e1215f02e10db846dcbbfe27d477ac19
     // 0.01% fee
@@ -93,29 +93,29 @@ contract LiquidityExample is IERC721Receiver {
     {
         // For this example, we will provide equal amounts of liquidity in both assets.
         // Providing liquidity in both assets means liquidity will be earning fees and is considered in-range.
-        uint amount0ToMint = 100 * 1e18;
+        uint amount0ToMint = 10000 * 1e18;
         uint amount1ToMint = 100 * 1e18;
 
         // transfer tokens to contract
-        TransferHelper.safeTransferFrom(DAI, msg.sender, address(this), amount0ToMint);
-        TransferHelper.safeTransferFrom(WETH, msg.sender, address(this), amount1ToMint);
+        TransferHelper.safeTransferFrom(MOCKDAI, msg.sender, address(this), amount0ToMint);
+        TransferHelper.safeTransferFrom(SAND, msg.sender, address(this), amount1ToMint);
 
         // Approve the position manager
         TransferHelper.safeApprove(
-            DAI,
+            MOCKDAI,
             address(nonfungiblePositionManager),
             amount0ToMint
         );
         TransferHelper.safeApprove(
-            WETH,
+            SAND,
             address(nonfungiblePositionManager),
             amount1ToMint
         );
 
         INonfungiblePositionManager.MintParams
             memory params = INonfungiblePositionManager.MintParams({
-                token0: DAI,
-                token1: WETH,
+                token0: MOCKDAI,
+                token1: SAND,
                 fee: poolFee,
                 // By using TickMath.MIN_TICK and TickMath.MAX_TICK, 
                 // we are providing liquidity across the whole range of the pool. 
@@ -141,22 +141,22 @@ contract LiquidityExample is IERC721Receiver {
         // Remove allowance and refund in both assets.
         if (amount0 < amount0ToMint) {
             TransferHelper.safeApprove(
-                DAI,
+                MOCKDAI,
                 address(nonfungiblePositionManager),
                 0
             );
             uint refund0 = amount0ToMint - amount0;
-            TransferHelper.safeTransfer(DAI, msg.sender, refund0);
+            TransferHelper.safeTransfer(MOCKDAI, msg.sender, refund0);
         }
 
         if (amount1 < amount1ToMint) {
             TransferHelper.safeApprove(
-                WETH,
+                SAND,
                 address(nonfungiblePositionManager),
                 0
             );
             uint refund1 = amount1ToMint - amount1;
-            TransferHelper.safeTransfer(WETH, msg.sender, refund1);
+            TransferHelper.safeTransfer(SAND, msg.sender, refund1);
         }
     }
 
@@ -188,11 +188,11 @@ contract LiquidityExample is IERC721Receiver {
             uint256 amount1
         )
     {
-        TransferHelper.safeTransferFrom(DAI, msg.sender, address(this), amountAdd0);
-        TransferHelper.safeTransferFrom(WETH, msg.sender, address(this), amountAdd1);
+        TransferHelper.safeTransferFrom(MOCKDAI, msg.sender, address(this), amountAdd0);
+        TransferHelper.safeTransferFrom(SAND, msg.sender, address(this), amountAdd1);
 
-        TransferHelper.safeApprove(DAI, address(nonfungiblePositionManager), amountAdd0);
-        TransferHelper.safeApprove(WETH, address(nonfungiblePositionManager), amountAdd1);
+        TransferHelper.safeApprove(MOCKDAI, address(nonfungiblePositionManager), amountAdd0);
+        TransferHelper.safeApprove(SAND, address(nonfungiblePositionManager), amountAdd1);
 
         INonfungiblePositionManager.IncreaseLiquidityParams memory params =
             INonfungiblePositionManager.IncreaseLiquidityParams({
