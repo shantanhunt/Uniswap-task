@@ -57,6 +57,7 @@ contract.
 - https://ethereum.org/en/developers/tutorials/the-graph-fixing-web3-data-querying/
 - Chainlink External Adapter in Typescript
 - https://github.com/smartcontractkit/external-adapters-js/tree/develop/packages/examples/source
+- https://github.com/libevm/uniswapv3-by-examples/blob/main/src/test/LiquidityProvider_New.t.sol
 
 ## Possible Errors
 - While writing the return values of the function, if there are multiple return values then you only need to declare them once in the 
