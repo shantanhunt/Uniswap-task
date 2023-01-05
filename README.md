@@ -47,6 +47,7 @@ contract.
 
 - https://docs.uniswap.org/protocol/guides/local-environment
 - Note: The setup used here is for demonstration purposes. It must be improved with proper security checks for production use.
+- https://docs.uniswap.org/protocol/reference/periphery/base/PoolInitializer
 
 ## References
 - [Uniswap V3 Deep Dive](https://trapdoortech.medium.com/uniswap-deep-dive-into-v3-technical-white-paper-2fe2b5c90d2)
@@ -57,7 +58,8 @@ contract.
 - https://ethereum.org/en/developers/tutorials/the-graph-fixing-web3-data-querying/
 - Chainlink External Adapter in Typescript
 - https://github.com/smartcontractkit/external-adapters-js/tree/develop/packages/examples/source
-- https://github.com/libevm/uniswapv3-by-examples/blob/main/src/test/LiquidityProvider_New.t.sol
+- https://github.com/atiselsts/uniswap-v3-liquidity-math
+- https://github.com/hackmoney-superfluid-project/lp-automation-super-app/blob/28dc0cc3c67157d08739add5ceb88afb0a139944/uniswapFactory/contracts/UserPosition.sol
 
 ## Possible Errors
 - While writing the return values of the function, if there are multiple return values then you only need to declare them once in the 
@@ -102,4 +104,42 @@ We need to deploy a simple smart contract that wraps around Uniswap V3's LP exit
 -   Note: This remaining Pool liquidity is of Bob. 
 
 ## Liquidity Example contracts on Mumbai Testnet
-1) 0x2A1bF12712f4D5b043761CAA8A06F5fA528f3328
+1) 
+
+## Caution
+- When you mint new position using the Liquidity Example contract, the positions NFT is actually minted to contract. So if you had manually added
+liquidity, you already have the positions NFT minted and hence you won't be able to add liquidity anymore using the contract(not even the increaseLiquidityCurrentRange works then)
+- tickLower and tickUpper should be properly set
+
+## Testing with MockDAI-GALA
+- [Bob initializes pool and adds liquidity](https://mumbai.polygonscan.com/tx/0xebdd357a24bbce68dd4293cf1df8a89523b5b74cf4166c38f99af5328d72bd4d)
+
+## Getting Price from Q64.96 number
+- See 
+- https://ethereum.stackexchange.com/questions/98685/computing-the-uniswap-v3-pair-price-from-q64-96-number 
+- See the second answer and then do reciprocal of that to get actual price ratio of assets
+
+-85200
+sqrtPriceX96: 1119122402227839611194053926 
+
+-46080
+sqrtPriceX96: 7912525539738091750091588668
+
+- Python console calculations
+```
+>>> (1119122402227839611194053926 ** 2) / (2**192)
+0.00019952439899256438
+>>> 7912525539738091750091588668 ** 2 / 2**192
+0.009974039462202664
+>>> 1/0.000999901
+1000.0990098019703
+>>> 1/0.00019952439899256438
+5011.918367122944
+>>> 1/0.009974039462202664
+100.2602810816592
+
+```
+
+## Continued testing with MockDAI-GALA 
+- Alice adds mints liquidity from LiquidityExample contract
+Tx hash:  
