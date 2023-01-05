@@ -115,8 +115,7 @@ liquidity, you already have the positions NFT minted and hence you won't be able
 - [Bob initializes pool and adds liquidity](https://mumbai.polygonscan.com/tx/0xebdd357a24bbce68dd4293cf1df8a89523b5b74cf4166c38f99af5328d72bd4d)
 
 ## Getting Price from Q64.96 number
-- See 
-- https://ethereum.stackexchange.com/questions/98685/computing-the-uniswap-v3-pair-price-from-q64-96-number 
+- See https://ethereum.stackexchange.com/questions/98685/computing-the-uniswap-v3-pair-price-from-q64-96-number 
 - See the second answer and then do reciprocal of that to get actual price ratio of assets
 
 -85200
@@ -142,4 +141,4 @@ sqrtPriceX96: 7912525539738091750091588668
 
 ## Continued testing with MockDAI-GALA 
 - Alice adds mints liquidity from LiquidityExample contract
-Tx hash:  
+
