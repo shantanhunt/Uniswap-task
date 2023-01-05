@@ -103,9 +103,6 @@ We need to deploy a simple smart contract that wraps around Uniswap V3's LP exit
     PoolLiquidity:  BigNumber { value: "948730417494628949734" }
 -   Note: This remaining Pool liquidity is of Bob. 
 
-## Liquidity Example contracts on Mumbai Testnet
-1) 
-
 ## Caution
 - When you mint new position using the Liquidity Example contract, the positions NFT is actually minted to contract. So if you had manually added
 liquidity, you already have the positions NFT minted and hence you won't be able to add liquidity anymore using the contract(not even the increaseLiquidityCurrentRange works then)
